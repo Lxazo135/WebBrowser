@@ -1,6 +1,7 @@
 package edu.temple.webbrowser;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -26,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fm;
     MyAdapter fragmentAdapter;
     int fragmentCount = 0;
-    EditText url;
+    EditText editText;
     BrowserFragment currentFragment;
     ViewPager viewPager;
-    List<Fragment> fragments = new Vector<Fragment>();
+    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
-        url = (EditText) findViewById(R.id.editText);
+        editText = (EditText) findViewById(R.id.editText);
         Button goButton = (Button) findViewById(R.id.goButton);
         viewPager = (ViewPager) findViewById(R.id.pager);
 
@@ -47,12 +49,19 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setOffscreenPageLimit(20);
 
+        Uri uri = getIntent().getData();
+        if (uri != null){
+            url = uri.toString();
+            viewPager.setCurrentItem(++fragmentCount);
+            currentFragment = (BrowserFragment) fragmentAdapter.instantiateItem(viewPager, viewPager.getCurrentItem());
+            currentFragment.loadUrl(url);
+        }
 
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currentFragment = (BrowserFragment) fragmentAdapter.instantiateItem(viewPager, viewPager.getCurrentItem());
-                currentFragment.loadUrl(url.getText().toString());
+                currentFragment.loadUrl(editText.getText().toString());
 
             }
         });
@@ -76,14 +85,14 @@ public class MainActivity extends AppCompatActivity {
                 if(viewPager.getCurrentItem() < fragmentCount) {
                     viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                     currentFragment = (BrowserFragment) fragmentAdapter.instantiateItem(viewPager, viewPager.getCurrentItem());
-                    url.setText(currentFragment.getUrl());
+                    editText.setText(currentFragment.getUrl());
                 }
                 return true;
 
             case R.id.action_prev:
                 viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
                 currentFragment = (BrowserFragment) fragmentAdapter.instantiateItem(viewPager, viewPager.getCurrentItem());
-                url.setText(currentFragment.getUrl());
+                editText.setText(currentFragment.getUrl());
                 return true;
 
             default:
