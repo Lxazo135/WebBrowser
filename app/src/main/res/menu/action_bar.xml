@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_newTab"
+        android:icon="@drawable/ic_action_new_tab"
+        android:title="@string/newTab"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_prev"
+        android:icon="@drawable/ic_action_prev"
+        android:title="@string/prev"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_next"
+        android:icon="@drawable/ic_action_next"
+        android:title="@string/next"
+        app:showAsAction="ifRoom"/>
+
+</menu>
