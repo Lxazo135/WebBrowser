@@ -47,12 +47,13 @@ public class MainActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         fragmentAdapter = new MyAdapter(fm);
         viewPager.setAdapter(fragmentAdapter);
-        viewPager.setOffscreenPageLimit(20);
+        viewPager.setOffscreenPageLimit(30);
 
         Uri uri = getIntent().getData();
         if (uri != null){
             url = uri.toString();
-            viewPager.setCurrentItem(++fragmentCount);
+            System.out.println(url);
+           // viewPager.setCurrentItem(++fragmentCount);
             currentFragment = (BrowserFragment) fragmentAdapter.instantiateItem(viewPager, viewPager.getCurrentItem());
             currentFragment.loadUrl(url);
         }
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 currentFragment = (BrowserFragment) fragmentAdapter.instantiateItem(viewPager, viewPager.getCurrentItem());
                 currentFragment.loadUrl(editText.getText().toString());
-
             }
         });
     }

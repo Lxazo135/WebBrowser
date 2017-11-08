@@ -49,12 +49,13 @@ public class BrowserFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_browser, container, false);
         webView = (WebView) v.findViewById(R.id.webView);
+        webView.getSettings().setJavaScriptEnabled(true);
         return v;
     }
 
-    public void loadUrl(String url){
-        webView.loadUrl(url);
-        this.url = url;
+    public void loadUrl(String targerUrl){
+        webView.loadUrl(targerUrl);
+        this.url = targerUrl;
     }
 
     public String getUrl(){
