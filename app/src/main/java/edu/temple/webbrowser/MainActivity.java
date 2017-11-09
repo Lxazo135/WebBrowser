@@ -1,6 +1,7 @@
 package edu.temple.webbrowser;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -49,14 +50,16 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setOffscreenPageLimit(30);
 
+        /*
         Uri uri = getIntent().getData();
         if (uri != null){
             url = uri.toString();
-            System.out.println(url);
-           // viewPager.setCurrentItem(++fragmentCount);
+            System.out.println("Intent url: " + url);
             currentFragment = (BrowserFragment) fragmentAdapter.instantiateItem(viewPager, viewPager.getCurrentItem());
+            System.out.println(viewPager.getCurrentItem());
             currentFragment.loadUrl(url);
         }
+        */
 
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +68,20 @@ public class MainActivity extends AppCompatActivity {
                 currentFragment.loadUrl(editText.getText().toString());
             }
         });
+    }
+
+    @Override
+    public void onNewIntent(Intent intent){
+        Uri uri = intent.getData();
+        if (uri != null){
+            url = uri.toString();
+            System.out.println("Intent url: " + url);
+            viewPager.setCurrentItem(++fragmentCount);
+            currentFragment = (BrowserFragment) fragmentAdapter.instantiateItem(viewPager, viewPager.getCurrentItem());
+            System.out.println(viewPager.getCurrentItem());
+            System.out.println("Fragment url: " + currentFragment.getUrl());
+            currentFragment.loadUrl(url);
+        }
     }
 
     @Override
