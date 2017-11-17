@@ -14,7 +14,7 @@ import java.util.Vector;
  */
 
 public class MyAdapter extends FragmentStatePagerAdapter {
-    private int fragmentCount = 20;
+    private int fragmentCount = 30;
 
 
     public MyAdapter(FragmentManager fm) {
